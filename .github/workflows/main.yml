@@ -8,6 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Localizar projeto
+        run: |
+          echo "Arquivos na raiz:"; ls -la
+          P=$(find . -name package.json -not -path "*/node_modules/*" | head -1)
+          echo "package.json encontrado em: $P"
+          [ -n "$P" ] || { echo "ERRO: projeto nao foi enviado ao repositorio"; exit 1; }
+          echo "PROJ=$(dirname $P)" >> $GITHUB_ENV
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -16,11 +23,16 @@ jobs:
           distribution: temurin
           java-version: 17
       - run: npm install
+        working-directory: ${{ env.PROJ }}
       - run: npx cap add android
+        working-directory: ${{ env.PROJ }}
       - run: node preparar.js
+        working-directory: ${{ env.PROJ }}
       - run: npx cap sync android
-      - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
+        working-directory: ${{ env.PROJ }}
+      - run: chmod +x gradlew && ./gradlew assembleDebug
+        working-directory: ${{ env.PROJ }}/android
       - uses: actions/upload-artifact@v4
         with:
           name: CaveiraX-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: ${{ env.PROJ }}/android/app/build/outputs/apk/debug/app-debug.apk
