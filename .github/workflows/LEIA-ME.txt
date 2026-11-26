@@ -1,0 +1,42 @@
+CAVEIRA X - projeto para gerar o APK (Android)
+
+O app roda dentro de um WebView (Capacitor) em https://localhost, entao o microfone funciona sem precisar hospedar nada.
+
+CAMINHO A - sem instalar nada (GitHub)
+1. Crie um repositorio no GitHub e envie TODO o conteudo desta pasta (inclusive .github).
+2. Aba Actions > "Gerar APK" > Run workflow.
+3. Quando terminar, baixe o artefato CaveiraX-apk (contem app-debug.apk).
+
+CAMINHO B - no seu PC com Windows
+Requisitos: Node.js LTS, JDK 17 e Android Studio (SDK) com a variavel ANDROID_HOME definida.
+1. De dois cliques em gerar_apk.bat.
+2. Ao final aparece CaveiraX.apk nesta pasta.
+
+INSTALAR NO CELULAR
+1. Envie o .apk para o celular (cabo, Drive, WhatsApp).
+2. Abra o arquivo e permita "Instalar apps desconhecidos" quando o Android pedir.
+3. Na primeira vez, permita o microfone.
+
+OBSERVACOES
+- E um APK de teste (debug), serve para uso pessoal. Para a Play Store seria preciso assinar com sua chave.
+- Sem VB-CABLE no celular: o som sai pelo alto-falante, fones ou Bluetooth. Use fones para evitar microfonia.
+
+NOVIDADE v3 (atualize no GitHub: www/index.html e a pasta native/ inteira)
+- Aba Microfone > "Microfone e saida (Android)": agora sao DOIS seletores separados.
+  Microfone = quem capta sua voz. Saida = de onde o som sai (escolha o alto-falante ou a caixa Bluetooth para o publico ouvir).
+- O modo chamada do Android (que deixa o som com qualidade de ligacao e sem agudos) so e usado quando e obrigatorio:
+  microfone Bluetooth de chamada, ou alto-falante do celular com fone conectado. Fora isso o app usa o modo normal, em alta qualidade.
+- Padroes limpos: gate de ruido desligado, compressor suave, redutor de ruido desligado (ligue se precisar, em Leve).
+  Isso e aplicado uma vez, tambem para quem ja tinha configuracao salva.
+- Limites do Android: nao existe microfone Bluetooth de chamada com saida no alto-falante ao mesmo tempo.
+  Alto-falante perto do microfone do mesmo celular gera microfonia; afaste ou baixe o volume.
+
+NOVIDADE v4 - segundo plano e bolinha flutuante
+- Ao tocar em INICIAR, o app roda em segundo plano (com notificacao) e continua captando ao trocar de app ou apagar a tela.
+- Ao sair do app aparece uma bolinha flutuante: toque para pausar/retomar (verde = ativo, cinza = pausado); arraste para mover.
+  Se o app estiver parado, tocar na bolinha abre o app e inicia.
+- Na primeira abertura o app pede "Sobrepor outros apps" e notificacoes. Aceite os dois.
+- Toque em INICIAR com o app aberto ANTES de sair (exigencia do Android 14+ para o microfone).
+- Icone corrigido (icone adaptativo).
+- Em Xiaomi/Samsung/Huawei: desative a otimizacao de bateria do app se o audio parar apos um tempo.
+- Atualize no GitHub: www/index.html, preparar.js e a pasta native/ inteira.
